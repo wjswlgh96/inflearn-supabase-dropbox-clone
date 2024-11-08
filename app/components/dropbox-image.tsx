@@ -2,14 +2,15 @@
 
 import { IconButton } from "@material-tailwind/react";
 import Image from "next/image";
+import { getImageUrl } from "utils/supabase/storage";
 
-export default function DropboxImage() {
+export default function DropboxImage({ image }) {
   return (
     <div className="relative w-full flex flex-col gap-2 p-4 border border-gray-100 rouded-2xl shadow-md">
       <div>
         <Image
-          src="/images/cutedog.jpeg"
-          alt="커여운 강아지"
+          src={getImageUrl(image.name)}
+          alt={image.name}
           width={0}
           height={0}
           sizes="100vw"
@@ -17,15 +18,13 @@ export default function DropboxImage() {
         />
       </div>
 
-      <div>cutedog.jpeg</div>
+      <div>{image.name}</div>
 
       <div className="absolute top-4 right-4">
         <IconButton
           color="red"
           placeholder={"이미지 삭제 버튼"}
           onClick={() => {}}
-          onPointerEnterCapture={() => {}}
-          onPointerLeaveCapture={() => {}}
         >
           <i className="fas fa-trash" />
         </IconButton>

@@ -24,7 +24,9 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={inter.className} suppressHydrationWarning>
-        {children}
+        <ReactQueryClientProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </ReactQueryClientProvider>
       </body>
     </html>
   );

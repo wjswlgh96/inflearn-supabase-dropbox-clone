@@ -7,17 +7,17 @@ import SearchComponent from "./components/search-component";
 import { useState } from "react";
 
 export default function UI() {
-  const [serachInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   return (
     <main className="w-full p-2 flex flex-col gap-4">
       <Logo />
       <SearchComponent
-        serachInput={serachInput}
+        searchInput={searchInput}
         setSearchInput={setSearchInput}
       />
       <FileDragDropZone />
-      <DropboxImageList />
+      <DropboxImageList searchInput={searchInput} />
     </main>
   );
 }
