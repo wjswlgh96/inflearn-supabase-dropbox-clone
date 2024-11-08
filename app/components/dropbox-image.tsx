@@ -1,10 +1,22 @@
 "use client";
 
-import { IconButton } from "@material-tailwind/react";
+import { IconButton, Spinner } from "@material-tailwind/react";
+import { useMutation } from "@tanstack/react-query";
+import { deleteFile } from "actions/storageActions";
+import { queryClient } from "config/ReactQueryClientProvider";
 import Image from "next/image";
 import { getImageUrl } from "utils/supabase/storage";
 
 export default function DropboxImage({ image }) {
+  const deleteFileMutation = useMutation({
+    mutationFn: deleteFile,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["images"],
+      });
+    },
+  });
+
   return (
     <div className="relative w-full flex flex-col gap-2 p-4 border border-gray-100 rouded-2xl shadow-md">
       <div>
@@ -24,9 +36,15 @@ export default function DropboxImage({ image }) {
         <IconButton
           color="red"
           placeholder={"이미지 삭제 버튼"}
-          onClick={() => {}}
+          onClick={async () => {
+            await deleteFileMutation.mutate(image.name);
+          }}
         >
-          <i className="fas fa-trash" />
+          {deleteFileMutation.isPending ? (
+            <Spinner />
+          ) : (
+            <i className="fas fa-trash" />
+          )}
         </IconButton>
       </div>
     </div>
